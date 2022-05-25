@@ -4,11 +4,13 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import { Game } from '../../games/entities/Game';
+import { Order } from '../../orders/entities/Order';
 
 @Entity('users')
 export class User {
@@ -23,6 +25,10 @@ export class User {
 
   @Column()
   email: string;
+
+  @OneToMany(() => Order, order => order.user)
+  @JoinTable()
+  orders: Order[]
 
   @ManyToMany(() => Game, (game) => game.users)
   @JoinTable()
